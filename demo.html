@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      label, textarea {
+        display: block;
+      }
+      #ggb-form, #ggb-entries article {
+        margin: 2em 0;
+        border: #ddd solid 1px;
+        background: #eee;
+      }
+      #ggb-entries header,
+      #ggb-entries main,
+      #ggb-entries footer,
+      #ggb-form {
+        padding: 1em;
+      }
+      #ggb-entries main {
+        white-space: pre-line;
+      }
+      #ggb-entries header {
+        border-bottom: #ddd solid 1px;
+      }
+      #ggb-emoticons a {
+        cursor: pointer;
+        transition: transform .2s;
+        display: inline-block;
+        margin: 0 0.2em;
+        width: 1em;
+      }
+      #ggb-emoticons a:hover {
+        transform: scale(1.5);
+      }
+      .loader {
+        width: 50px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: 8px solid #514b82;
+        animation:
+          l20-1 0.8s infinite linear alternate,
+        l20-2 1.6s infinite linear;
+      }
+      @keyframes l20-1{
+        0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
+        12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
+        25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
+        50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+        62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+        75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
+        100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
+      }
+      @keyframes l20-2{
+        0%    {transform:scaleY(1)  rotate(0deg)}
+        49.99%{transform:scaleY(1)  rotate(135deg)}
+        50%   {transform:scaleY(-1) rotate(0deg)}
+        100%  {transform:scaleY(-1) rotate(-135deg)}
+      }
+    </style>
+  </head>
+<body>
+  <div id="ggb-container"></div>
+  <template id="ggb-view">
+    <form id="ggb-form">
+      <label for="ggb-field-name">Name:</label>
+      <input type="text" id="ggb-field-name" size="20">
+
+      <label for="ggb-field-email">E-Mail:</label>
+      <input type="text" id="ggb-field-email" size="20" placeholder="john@example.org">
+
+      <label for="ggb-field-message">Message:</label>
+      <div id="ggb-emoticons">
+        <a>😀</a>
+        <a>😁</a>
+        <a>😆</a>
+        <a>😂</a>
+        <a>🙃</a>
+        <a>😉</a>
+        <a>😍</a>
+        <a>🤩</a>
+        <a>🤪</a>
+        <a>😥</a>
+        <a>👍</a>
+      </div>
+      <textarea id="ggb-field-message" rows="20" cols="40"></textarea>
+
+      <label for="ggb-field-code">Please select the largest number:</label>
+      <select id="ggb-field-code">
+        <option></option>
+        <option>99</option>
+        <option>3</option>
+        <option>1992</option>
+        <option>333</option>
+        <option>700</option>
+      </select>
+      <div id="ggb-status-container"></div>
+      <button>OK</button>
+    </form>
+    <div id="ggb-entries"><div class="loader"></div></div>
+  </template>
+  <template id="ggb-entry">
+    <article>
+      <header>
+        <div><strong>Name: </strong><span class="name"></span></div>
+        <div><strong>Date: </strong><span class="created"></span></div>
+      </header>
+      <main></main>
+      <footer></footer>
+    </article>
+  </template>
+  <template id="ggb-msg-code-error">Wrong code</template>
+  <template id="ggb-msg-validation-error">Validation failed</template>
+  <template id="ggb-msg-postlimit-error">Please wait a moment for submitting another entry.</template>
+  <template id="ggb-msg-post-success">Thanks, entry submitted successfully. Your entry will be visible after approval by the site owner.</template>
+  <template id="ggb-admin">
+    <div id="ggb-entries"><div class="loader"></div></div>
+    <form style="display: none">
+      <button id="ggb-button-approve">Approve entry and send email to author</button>
+      <button id="ggb-button-reject">Hide entry</button>
+      <textarea id="ggb-field-comment" rows="20" cols="40"></textarea>
+      <button id="ggb-button-comment">Kommentar speichern</button>
+    </form>
+  </template>
+  <script src="GoGuestBook.js"></script>
+  <script>GoGuestBook("//" + document.location.host);</script>
+</body>
+</html>
